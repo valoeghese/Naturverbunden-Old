@@ -27,6 +27,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Vec3f;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
@@ -38,13 +39,18 @@ public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
 		DefaultedList<ItemStack> defaultedList = entity.getItems();
 		int pos = (int) entity.getPos().asLong();
 
-		System.out.println("e");
 		for(int i = 0; i < defaultedList.size(); ++i) {
 			ItemStack stack = (ItemStack)defaultedList.get(i);
 
 			if (stack != ItemStack.EMPTY) {
 				matrices.push();
-				matrices.translate(0.5 + 0.1 * ((i + 1) & 0b1), 0.1 * i + 0.05, 0.5D + 0.1 * (i & 0b1));
+				matrices.translate(0.5, 0.05, 0.5D);
+
+				if (i > 0) {
+					matrices.translate(0.23 * ((i == 1) ? 1 : -1), 0.0, 0.23 * ((i == 1) ? 1 : -1));
+				}
+				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+				matrices.scale(0.8f, 0.8f, 0.8f);
 
 				MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, pos + i);
 				matrices.pop();

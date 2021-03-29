@@ -22,13 +22,33 @@ package valoeghese.naturverbunden.block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class ItemBlock extends BlockWithEntity {
 	ItemBlock(Settings settings) {
 		super(settings);
-		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
+		ItemStack stack = player.getStackInHand(hand);
+
+		if (stack != ItemStack.EMPTY) {
+			if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
+				stack.decrement(1);
+				return ActionResult.SUCCESS;
+			}
+		}
+
+		return ActionResult.PASS;
 	}
 
 	@Override
