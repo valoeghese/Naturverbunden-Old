@@ -1,6 +1,6 @@
 /*
- * Lint
- * Copyright (C) 2020 hYdos, Valoeghese, ramidzkh
+ * Naturverbunden
+ * Copyright (C) 2020 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,12 +20,15 @@
 package valoeghese.naturverbunden.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import valoeghese.naturverbunden.block.NVBBlocks;
+import valoeghese.naturverbunden.client.render.ItemBlockRenderer;
 
 public class NVBClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		
+		BlockEntityRendererRegistry.INSTANCE.register(NVBBlocks.ITEM_BLOCK_ENTITY, ItemBlockRenderer::new);
 	}
 
 }

@@ -19,19 +19,38 @@
 
 package valoeghese.naturverbunden.block;
 
+import com.mojang.datafixers.types.Type;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
+import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class NVBBlocks {
+	private static Identifier id(String id) {
+		return new Identifier("nvb", id);
+	}
+
 	private static Block register(String id, AbstractBlock.Settings settings) {
-		return Registry.register(Registry.BLOCK, new Identifier("nvb", id), new Block(settings));
+		return Registry.register(Registry.BLOCK, id(id), new Block(settings));
+	}
+
+	private static <T extends BlockEntity> BlockEntityType<T> create(String id, FabricBlockEntityTypeBuilder<T> builder) {
+		Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id);
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, id(id), builder.build(type));
 	}
 
 	public static final Block ITEM_BLOCK = register("item_block", AbstractBlock.Settings.of(Material.DECORATION)
 			.strength(0.5f)
 			.sounds(BlockSoundGroup.STONE));
+
+	public static final BlockEntityType<ItemBlockEntity> ITEM_BLOCK_ENTITY = create("item_block", FabricBlockEntityTypeBuilder.create(ItemBlockEntity::new, ITEM_BLOCK));
 }

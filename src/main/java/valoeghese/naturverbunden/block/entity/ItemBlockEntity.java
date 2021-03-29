@@ -1,6 +1,6 @@
 /*
- * Lint
- * Copyright (C) 2020 hYdos, Valoeghese, ramidzkh
+ * Naturverbunden
+ * Copyright (C) 2020 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,17 +23,18 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import valoeghese.naturverbunden.block.NVBBlocks;
 
 public class ItemBlockEntity extends BlockEntity {
-	public ItemBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
+	public ItemBlockEntity(BlockPos pos, BlockState state) {
+		super(NVBBlocks.ITEM_BLOCK_ENTITY, pos, state);
 		this.items = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	}
 
@@ -43,7 +44,7 @@ public class ItemBlockEntity extends BlockEntity {
 		return this.items;
 	}
 
-	public boolean addItem(ItemStack item, int integer) {
+	public boolean addItem(ItemStack item) {
 		for(int i = 0; i < this.items.size(); ++i) {
 			ItemStack itemStack = this.items.get(i);
 
@@ -88,7 +89,7 @@ public class ItemBlockEntity extends BlockEntity {
 
 	@Nullable
 	public BlockEntityUpdateS2CPacket toUpdatePacket() {
-		return new BlockEntityUpdateS2CPacket(this.pos, 13, this.toInitialChunkDataNbt());
+		return new BlockEntityUpdateS2CPacket(this.pos, Registry.BLOCK_ENTITY_TYPE.getRawId(this.getType()), this.toInitialChunkDataNbt());
 	}
 
 	public NbtCompound toInitialChunkDataNbt() {
