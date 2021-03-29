@@ -3,6 +3,7 @@
   "package": "valoeghese.naturverbunden.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinItem"
   ],
   "client": [
   ],
