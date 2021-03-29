@@ -21,6 +21,7 @@ package valoeghese.naturverbunden.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
@@ -49,6 +52,20 @@ public class ItemBlock extends BlockWithEntity {
 		}
 
 		return ActionResult.PASS;
+	}
+
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+		return super.getOutlineShape(state, world, pos, context);
+	}
+
+	@Override
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
+
+		for (ItemStack stack : entity.getItems()) {
+			player.giveItemStack(stack);
+		}
 	}
 
 	@Override
