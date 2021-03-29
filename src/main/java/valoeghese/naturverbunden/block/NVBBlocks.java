@@ -50,7 +50,13 @@ public class NVBBlocks {
 
 	public static final Block ITEM_BLOCK = register("item_block", AbstractBlock.Settings.of(Material.DECORATION)
 			.strength(0.5f)
+			.noCollision()
+			.nonOpaque()
 			.sounds(BlockSoundGroup.STONE));
 
 	public static final BlockEntityType<ItemBlockEntity> ITEM_BLOCK_ENTITY = create("item_block", FabricBlockEntityTypeBuilder.create(ItemBlockEntity::new, ITEM_BLOCK));
+	
+	public static final Block register() {
+		return ITEM_BLOCK;
+	}
 }

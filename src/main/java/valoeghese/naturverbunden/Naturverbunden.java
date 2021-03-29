@@ -25,12 +25,13 @@ import org.apache.logging.log4j.LogManager;
 import java.util.Random;
 
 import net.fabricmc.api.ModInitializer;
+import valoeghese.naturverbunden.block.NVBBlocks;
 
 public class Naturverbunden implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("Naturverbunden");
 
 	@Override
 	public void onInitialize() {
-		// Add init code here!
+		NVBBlocks.register();
 	}
 }
