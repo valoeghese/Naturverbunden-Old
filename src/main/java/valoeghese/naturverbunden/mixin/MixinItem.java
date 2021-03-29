@@ -50,11 +50,10 @@ public class MixinItem {
 					world.setBlockState(pos, state);
 					ItemBlockEntity entity = NVBBlocks.ITEM_BLOCK_ENTITY.instantiate(pos, state);
 					
-					entity.addItem(new ItemStack(stack.getItem(), 1));
 					stack.decrement(1);
 
 					world.addBlockEntity(entity);
-					
+					entity.addItem(new ItemStack(stack.getItem(), 1));
 					
 					info.setReturnValue(ActionResult.SUCCESS);
 				}
