@@ -17,19 +17,22 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden;
+package valoeghese.naturverbunden.block;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.util.math.BlockPos;
+import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
-import net.fabricmc.api.ModInitializer;
-import valoeghese.naturverbunden.block.NVBBlocks;
-
-public class Naturverbunden implements ModInitializer {
-	public static final Logger LOGGER = LogManager.getLogger("Naturverbunden");
+public class ItemBlock extends BlockWithEntity {
+	ItemBlock(Settings settings) {
+		super(settings);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
-	public void onInitialize() {
-		NVBBlocks.register();
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+		return new ItemBlockEntity(pos, state);
 	}
 }

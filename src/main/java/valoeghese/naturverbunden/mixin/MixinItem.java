@@ -24,42 +24,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import valoeghese.naturverbunden.block.NVBBlocks;
-import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
+import valoeghese.naturverbunden.mechanics.Mechanics;
 
 @Mixin(Item.class)
 public class MixinItem {
 	@Inject(at = @At("HEAD"), method = "useOnBlock", cancellable = true)
 	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
-		try {
-			World world = context.getWorld();
-			BlockPos pos = context.getBlockPos().offset(context.getSide());
-			ItemStack stack = context.getStack();
-
-			if (stack != ItemStack.EMPTY && !world.isOutOfHeightLimit(pos)) {
-				if (world.isAir(pos)) {
-					BlockState state = NVBBlocks.ITEM_BLOCK.getDefaultState();
-
-					world.setBlockState(pos, state);
-					ItemBlockEntity entity = NVBBlocks.ITEM_BLOCK_ENTITY.instantiate(pos, state);
-					
-					stack.decrement(1);
-
-					world.addBlockEntity(entity);
-					entity.addItem(new ItemStack(stack.getItem(), 1));
-					
-					info.setReturnValue(ActionResult.SUCCESS);
-				}
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Error in Item Block Placement", e);
-		}
+		Mechanics.placeItem(context, info::setReturnValue);
 	}
 }

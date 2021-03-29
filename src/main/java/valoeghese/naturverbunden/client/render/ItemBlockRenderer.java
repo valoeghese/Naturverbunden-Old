@@ -38,6 +38,7 @@ public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
 		DefaultedList<ItemStack> defaultedList = entity.getItems();
 		int pos = (int) entity.getPos().asLong();
 
+		System.out.println("e");
 		for(int i = 0; i < defaultedList.size(); ++i) {
 			ItemStack stack = (ItemStack)defaultedList.get(i);
 

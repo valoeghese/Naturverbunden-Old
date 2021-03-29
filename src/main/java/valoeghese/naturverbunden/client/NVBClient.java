@@ -21,6 +21,7 @@ package valoeghese.naturverbunden.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import valoeghese.naturverbunden.Naturverbunden;
 import valoeghese.naturverbunden.block.NVBBlocks;
 import valoeghese.naturverbunden.client.render.ItemBlockRenderer;
 
@@ -28,6 +29,7 @@ public class NVBClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		Naturverbunden.LOGGER.info("Initializing Client");
 		BlockEntityRendererRegistry.INSTANCE.register(NVBBlocks.ITEM_BLOCK_ENTITY, ItemBlockRenderer::new);
 	}
 

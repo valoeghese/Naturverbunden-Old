@@ -19,11 +19,14 @@
 
 package valoeghese.naturverbunden.block;
 
+import java.util.function.Function;
+
 import com.mojang.datafixers.types.Type;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -39,8 +42,8 @@ public class NVBBlocks {
 		return new Identifier("nvb", id);
 	}
 
-	private static Block register(String id, AbstractBlock.Settings settings) {
-		return Registry.register(Registry.BLOCK, id(id), new Block(settings));
+	private static Block register(String id, AbstractBlock.Settings settings, Function<AbstractBlock.Settings, Block> blockifier) {
+		return Registry.register(Registry.BLOCK, id(id), blockifier.apply(settings));
 	}
 
 	private static <T extends BlockEntity> BlockEntityType<T> create(String id, FabricBlockEntityTypeBuilder<T> builder) {
@@ -52,7 +55,7 @@ public class NVBBlocks {
 			.strength(0.5f)
 			.noCollision()
 			.nonOpaque()
-			.sounds(BlockSoundGroup.STONE));
+			.sounds(BlockSoundGroup.STONE), ItemBlock::new);
 
 	public static final BlockEntityType<ItemBlockEntity> ITEM_BLOCK_ENTITY = create("item_block", FabricBlockEntityTypeBuilder.create(ItemBlockEntity::new, ITEM_BLOCK));
 	
