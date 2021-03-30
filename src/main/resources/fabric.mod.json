@@ -23,6 +23,8 @@
     ]
   },
   
+  "accessWidener": "nvb.aw",
+
   "requires": {
     "fabricloader": ">=0.4.0"
   },

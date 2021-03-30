@@ -23,7 +23,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import net.minecraft.util.Identifier;
 import valoeghese.naturverbunden.init.NVBBlocks;
+import valoeghese.naturverbunden.init.NVBFeatures;
 import valoeghese.naturverbunden.init.NVBRecipes;
 
 public class Naturverbunden implements ModInitializer {
@@ -31,7 +34,13 @@ public class Naturverbunden implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		NVBBlocks.register();
+		NVBBlocks.forceRegister();
 		NVBRecipes.initialise();
+		NVBFeatures.forceRegister();
+		NVBFeatures.initialiseWorldGen();
+	}
+
+	public static Identifier id(String id) {
+		return new Identifier("nvb", id);
 	}
 }

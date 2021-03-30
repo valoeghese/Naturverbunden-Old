@@ -31,24 +31,20 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
+import valoeghese.naturverbunden.Naturverbunden;
 import valoeghese.naturverbunden.block.ItemBlock;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class NVBBlocks {
-	private static Identifier id(String id) {
-		return new Identifier("nvb", id);
-	}
-
 	private static Block register(String id, AbstractBlock.Settings settings, Function<AbstractBlock.Settings, Block> blockifier) {
-		return Registry.register(Registry.BLOCK, id(id), blockifier.apply(settings));
+		return Registry.register(Registry.BLOCK, Naturverbunden.id(id), blockifier.apply(settings));
 	}
 
 	private static <T extends BlockEntity> BlockEntityType<T> create(String id, FabricBlockEntityTypeBuilder<T> builder) {
 		Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id);
-		return Registry.register(Registry.BLOCK_ENTITY_TYPE, id(id), builder.build(type));
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, Naturverbunden.id(id), builder.build(type));
 	}
 
 	public static final Block ITEM_BLOCK = register("item_block", AbstractBlock.Settings.of(Material.DECORATION)
@@ -58,8 +54,8 @@ public class NVBBlocks {
 			.sounds(BlockSoundGroup.STONE), ItemBlock::new);
 
 	public static final BlockEntityType<ItemBlockEntity> ITEM_BLOCK_ENTITY = create("item_block", FabricBlockEntityTypeBuilder.create(ItemBlockEntity::new, ITEM_BLOCK));
-	
-	public static final Block register() {
+
+	public static final Block forceRegister() {
 		return ITEM_BLOCK;
 	}
 }
