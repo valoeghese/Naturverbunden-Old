@@ -49,7 +49,7 @@ public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
 				matrices.translate(0.5, 0.05, 0.5D);
 
 				if (i > 0) {
-					matrices.translate(0.23 * ((i == 1) ? 1 : -1) * spread, 0.0, 0.23 * ((i == 1) ? 1 : -1) * spread);
+					matrices.translate(0.23 * ((i == 1) ? 1 : -1) * spread, 0.01 * i, 0.23 * ((i == 1) ? 1 : -1) * spread);
 				}
 
 				matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
