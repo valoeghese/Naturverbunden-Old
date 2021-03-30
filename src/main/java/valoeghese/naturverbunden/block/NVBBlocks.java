@@ -51,7 +51,7 @@ public class NVBBlocks {
 	}
 
 	public static final Block ITEM_BLOCK = register("item_block", AbstractBlock.Settings.of(Material.DECORATION)
-			.strength(0.5f)
+			.strength(-1.0f, 0.4f)
 			.noCollision()
 			.nonOpaque()
 			.sounds(BlockSoundGroup.STONE), ItemBlock::new);

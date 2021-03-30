@@ -19,16 +19,22 @@
 
 package valoeghese.naturverbunden.block;
 
+import java.util.Optional;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -44,7 +50,15 @@ public class ItemBlock extends BlockWithEntity {
 		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
 		ItemStack stack = player.getStackInHand(hand);
 
-		if (stack != ItemStack.EMPTY) {
+		if (stack.isEmpty()) {
+			PlayerInventory inventory = player.getInventory();
+			Optional<ItemStack> s = entity.removeItem();
+			
+			if (s.isPresent()) {
+				inventory.insertStack(inventory.selectedSlot, s.get());
+				return ActionResult.success(world.isClient());
+			}
+		} else {
 			if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
 				stack.decrement(1);
 				return ActionResult.SUCCESS;
@@ -56,7 +70,7 @@ public class ItemBlock extends BlockWithEntity {
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return super.getOutlineShape(state, world, pos, context);
+		return SHAPE;
 	}
 
 	@Override
@@ -64,7 +78,18 @@ public class ItemBlock extends BlockWithEntity {
 		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
 
 		for (ItemStack stack : entity.getItems()) {
-			player.giveItemStack(stack);
+			if (!stack.isEmpty()) {
+				ItemEntity itemEntity = new ItemEntity(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+				itemEntity.setPickupDelay(40);
+
+				float f = world.getRandom().nextFloat() * 0.5F;
+				float g = world.getRandom().nextFloat() * 6.2831855F;
+				itemEntity.setVelocity((double)(-MathHelper.sin(g) * f), 0.2D, (double)(MathHelper.cos(g) * f));
+				
+				if (!world.isClient()) {
+					world.spawnEntity(itemEntity);
+				}
+			}
 		}
 	}
 
@@ -72,4 +97,6 @@ public class ItemBlock extends BlockWithEntity {
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
 		return new ItemBlockEntity(pos, state);
 	}
+
+	public static VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 1, 0.1, 1);
 }

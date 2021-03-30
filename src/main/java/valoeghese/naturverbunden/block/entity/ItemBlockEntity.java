@@ -19,6 +19,8 @@
 
 package valoeghese.naturverbunden.block.entity;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
@@ -49,13 +51,26 @@ public class ItemBlockEntity extends BlockEntity {
 			ItemStack itemStack = this.items.get(i);
 
 			if (itemStack.isEmpty()) {
-				this.items.set(i, item.split(1));
+				this.items.set(i, item);
 				this.updateListeners();
 				return true;
 			}
 		}
 
 		return false;
+	}
+	
+	public Optional<ItemStack> removeItem() {
+		for(int i = this.items.size() - 1; i >= 0; ++i) {
+			ItemStack itemStack = this.items.get(i);
+
+			if (!itemStack.isEmpty()) {
+				this.items.set(i, ItemStack.EMPTY);
+				return Optional.of(itemStack);
+			}
+		}
+
+		return Optional.empty();
 	}
 
 	private void updateListeners() {

@@ -42,7 +42,7 @@ public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
 		for(int i = 0; i < defaultedList.size(); ++i) {
 			ItemStack stack = (ItemStack)defaultedList.get(i);
 
-			if (stack != ItemStack.EMPTY) {
+			if (!stack.isEmpty()) {
 				matrices.push();
 				matrices.translate(0.5, 0.05, 0.5D);
 
