@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.api.ModInitializer;
 import valoeghese.naturverbunden.init.NVBBlocks;
+import valoeghese.naturverbunden.init.NVBRecipes;
 
 public class Naturverbunden implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("Naturverbunden");
@@ -31,5 +32,6 @@ public class Naturverbunden implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		NVBBlocks.register();
+		NVBRecipes.initialise();
 	}
 }

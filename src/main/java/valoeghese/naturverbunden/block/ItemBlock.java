@@ -104,5 +104,5 @@ public class ItemBlock extends BlockWithEntity {
 		return new ItemBlockEntity(pos, state);
 	}
 
-	public static VoxelShape SHAPE = Block.createCuboidShape(1, 0, 1, 1, 0.1, 1);
+	public static VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16.0, 1.0, 16.0);
 }

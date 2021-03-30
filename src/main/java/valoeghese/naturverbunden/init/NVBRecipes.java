@@ -25,7 +25,7 @@ import net.minecraft.item.Items;
 import valoeghese.naturverbunden.mechanics.PrimitiveCrafting;
 
 public class NVBRecipes {
-	public void initialise() {
+	public static void initialise() {
 		// "Primitive" recipes
 		PrimitiveCrafting.addRecipe(Arrays.asList(Items.STICK, Items.STICK, Items.FLINT), Items.DIAMOND);
 	}

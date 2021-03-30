@@ -116,7 +116,7 @@ public class ItemBlockEntity extends BlockEntity {
 
 	public void hit() {
 		if (this.craftProgress > 0 || PrimitiveCrafting.match(this.getContents())) {
-			if (this.craftProgress++ > 4) {
+			if (++this.craftProgress > 4) {
 				Item result = PrimitiveCrafting.get(this.getContents());
 				
 				this.items.clear();
@@ -144,7 +144,7 @@ public class ItemBlockEntity extends BlockEntity {
 		super.readNbt(tag);
 		this.items.clear();
 		Inventories.readNbt(tag, this.items);
-		//this.craftProgress = tag.getInt("craftProgress");
+		this.craftProgress = tag.getInt("craftProgress");
 	}
 
 
