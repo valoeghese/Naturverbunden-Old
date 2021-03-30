@@ -1,6 +1,6 @@
 /*
  * Naturverbunden
- * Copyright (C) 2020 Valoeghese
+ * Copyright (C) 2021 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.api.ModInitializer;
-import valoeghese.naturverbunden.block.NVBBlocks;
+import valoeghese.naturverbunden.init.NVBBlocks;
 
 public class Naturverbunden implements ModInitializer {
 	public static final Logger LOGGER = LogManager.getLogger("Naturverbunden");

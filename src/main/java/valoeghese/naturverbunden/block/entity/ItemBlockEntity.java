@@ -1,6 +1,6 @@
 /*
  * Naturverbunden
- * Copyright (C) 2020 Valoeghese
+ * Copyright (C) 2021 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,20 +19,26 @@
 
 package valoeghese.naturverbunden.block.entity;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import valoeghese.naturverbunden.block.NVBBlocks;
+import net.minecraft.world.World;
+import valoeghese.naturverbunden.init.NVBBlocks;
+import valoeghese.naturverbunden.mechanics.PrimitiveCrafting;
 
 public class ItemBlockEntity extends BlockEntity {
 	public ItemBlockEntity(BlockPos pos, BlockState state) {
@@ -41,9 +47,17 @@ public class ItemBlockEntity extends BlockEntity {
 	}
 
 	private final DefaultedList<ItemStack> items;
+	private int craftProgress = 0;
 
 	public DefaultedList<ItemStack> getItems() {
 		return this.items;
+	}
+
+	/**
+	 * @return A value between 0 and 4 as the progress in crafting.
+	 */
+	public int getCraftProgress() {
+		return this.craftProgress;
 	}
 
 	public boolean addItem(ItemStack item) {
@@ -52,6 +66,7 @@ public class ItemBlockEntity extends BlockEntity {
 
 			if (itemStack.isEmpty()) {
 				this.items.set(i, item);
+				this.craftProgress = 0;
 				this.updateListeners();
 				return true;
 			}
@@ -59,18 +74,57 @@ public class ItemBlockEntity extends BlockEntity {
 
 		return false;
 	}
-	
-	public Optional<ItemStack> removeItem() {
-		for(int i = this.items.size() - 1; i >= 0; ++i) {
+
+	public Optional<ItemStack> removeItem(World world, BlockPos pos) {
+		for(int i = this.items.size() - 1; i >= 0; --i) {
 			ItemStack itemStack = this.items.get(i);
 
 			if (!itemStack.isEmpty()) {
 				this.items.set(i, ItemStack.EMPTY);
+				this.craftProgress = 0;
+				this.updateListeners();
+				boolean empty = true;
+
+				// Check if more items
+				for (--i; i >= 0; --i) {
+					if (!this.items.get(i).isEmpty()) {
+						empty = false;
+						break;
+					}
+				}
+
+				if (empty) {
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				}
+
 				return Optional.of(itemStack);
 			}
 		}
 
 		return Optional.empty();
+	}
+
+	/**
+	 * @return A list of the items in this block entity.
+	 */
+	private List<Item> getContents() {
+		return this.items.stream()
+				.filter(stack -> !stack.isEmpty())
+				.map(ItemStack::getItem)
+				.collect(Collectors.toList());
+	}
+
+	public void hit() {
+		if (this.craftProgress > 0 || PrimitiveCrafting.match(this.getContents())) {
+			if (this.craftProgress++ > 4) {
+				Item result = PrimitiveCrafting.get(this.getContents());
+				
+				this.items.clear();
+				this.items.set(0, result.getDefaultStack());
+			}
+
+			this.updateListeners();
+		}
 	}
 
 	private void updateListeners() {
@@ -83,30 +137,39 @@ public class ItemBlockEntity extends BlockEntity {
 		this.items.clear();
 	}
 
-	// NBT Hell
+	// NBT
 
+	@Override
 	public void readNbt(NbtCompound tag) {
 		super.readNbt(tag);
 		this.items.clear();
 		Inventories.readNbt(tag, this.items);
+		//this.craftProgress = tag.getInt("craftProgress");
 	}
 
+
+	private NbtCompound saveInitialChunkData(NbtCompound tag) {
+		super.writeNbt(tag);
+		Inventories.writeNbt(tag, this.items, true);
+		tag.putInt("craftProgress", this.craftProgress);
+		return tag;
+	}
+
+	// Backend NBT Hell
+
+	@Override
 	public NbtCompound writeNbt(NbtCompound tag) {
 		this.saveInitialChunkData(tag);
 		return tag;
 	}
 
-	private NbtCompound saveInitialChunkData(NbtCompound tag) {
-		super.writeNbt(tag);
-		Inventories.writeNbt(tag, this.items, true);
-		return tag;
-	}
-
 	@Nullable
+	@Override
 	public BlockEntityUpdateS2CPacket toUpdatePacket() {
 		return new BlockEntityUpdateS2CPacket(this.pos, Registry.BLOCK_ENTITY_TYPE.getRawId(this.getType()), this.toInitialChunkDataNbt());
 	}
 
+	@Override
 	public NbtCompound toInitialChunkDataNbt() {
 		return this.saveInitialChunkData(new NbtCompound());
 	}

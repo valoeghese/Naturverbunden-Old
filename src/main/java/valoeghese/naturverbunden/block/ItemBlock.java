@@ -1,6 +1,6 @@
 /*
  * Naturverbunden
- * Copyright (C) 2020 Valoeghese
+ * Copyright (C) 2021 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -41,7 +41,7 @@ import net.minecraft.world.World;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class ItemBlock extends BlockWithEntity {
-	ItemBlock(Settings settings) {
+	public ItemBlock(Settings settings) {
 		super(settings);
 	}
 
@@ -52,8 +52,8 @@ public class ItemBlock extends BlockWithEntity {
 
 		if (stack.isEmpty()) {
 			PlayerInventory inventory = player.getInventory();
-			Optional<ItemStack> s = entity.removeItem();
-			
+			Optional<ItemStack> s = entity.removeItem(world, pos);
+
 			if (s.isPresent()) {
 				inventory.insertStack(inventory.selectedSlot, s.get());
 				return ActionResult.success(world.isClient());
@@ -71,6 +71,12 @@ public class ItemBlock extends BlockWithEntity {
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
+	}
+
+	@Override
+	public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
+		entity.hit();
 	}
 
 	@Override

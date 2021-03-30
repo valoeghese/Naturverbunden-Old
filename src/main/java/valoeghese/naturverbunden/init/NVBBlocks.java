@@ -1,6 +1,6 @@
 /*
  * Naturverbunden
- * Copyright (C) 2020 Valoeghese
+ * Copyright (C) 2021 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.block;
+package valoeghese.naturverbunden.init;
 
 import java.util.function.Function;
 
@@ -34,6 +34,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
+import valoeghese.naturverbunden.block.ItemBlock;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class NVBBlocks {

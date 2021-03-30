@@ -17,20 +17,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.client;
+package valoeghese.naturverbunden.init;
 
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import valoeghese.naturverbunden.Naturverbunden;
-import valoeghese.naturverbunden.client.render.ItemBlockRenderer;
-import valoeghese.naturverbunden.init.NVBBlocks;
+import java.util.Arrays;
 
-public class NVBClient implements ClientModInitializer {
+import net.minecraft.item.Items;
+import valoeghese.naturverbunden.mechanics.PrimitiveCrafting;
 
-	@Override
-	public void onInitializeClient() {
-		Naturverbunden.LOGGER.info("Initializing Client");
-		BlockEntityRendererRegistry.INSTANCE.register(NVBBlocks.ITEM_BLOCK_ENTITY, ItemBlockRenderer::new);
+public class NVBRecipes {
+	public void initialise() {
+		// "Primitive" recipes
+		PrimitiveCrafting.addRecipe(Arrays.asList(Items.STICK, Items.STICK, Items.FLINT), Items.DIAMOND);
 	}
-
 }

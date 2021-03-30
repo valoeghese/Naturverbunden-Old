@@ -1,6 +1,6 @@
 /*
  * Naturverbunden
- * Copyright (C) 2020 Valoeghese
+ * Copyright (C) 2021 Valoeghese
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,8 +27,8 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import valoeghese.naturverbunden.block.NVBBlocks;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
+import valoeghese.naturverbunden.init.NVBBlocks;
 
 public class Mechanics {
 	public static void placeItem(ItemUsageContext context, Consumer<ActionResult> sreturn) {
