@@ -17,20 +17,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.mixin;
+package valoeghese.naturverbunden.init;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
-import net.minecraft.entity.player.HungerManager;
-import net.minecraft.entity.player.PlayerEntity;
-import valoeghese.naturverbunden.mechanics.PlayerStats;
-
-@Mixin(HungerManager.class)
-public class MixinHungerManager {
-	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;heal(F)V"), method = "update(Lnet/minecraft/entity/player/PlayerEntity;)V")
-	private void redirectUpdateHeal(PlayerEntity player, float amount) {
-		player.heal(((PlayerStats) player).h_expendHealPoints(amount));
-	}
+public class NVBBiomes {
+	// Mountains				- Mountain Chain Gen
+	// Plains; Forest			- Vanilla Style
+	// Scrubland				- I described this biome somewhere already
+	// Ice Cap					- Vanilla's Ice Bioems and frozen ocean
+	// Boreal Forest 			- (aspen and pines) 
+	// Rainforest				- Like jungle but less cursed 
+	// Caldera					- Important source for some minerals
+	
+	// Ocean types and Rivers
 }
