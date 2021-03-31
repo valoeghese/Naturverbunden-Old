@@ -36,7 +36,8 @@ public class Mechanics {
 		BlockPos pos = context.getBlockPos().offset(context.getSide());
 		ItemStack stack = context.getStack();
 
-		if (!stack.isEmpty() && !stack.hasEnchantments() && !world.isOutOfHeightLimit(pos)) {
+		// If it isn't empty nor it has enchantments and it's not food (unless you're sneaking) and the position valid
+		if (!stack.isEmpty() && !stack.hasEnchantments() && (!stack.isFood() || context.getPlayer().isSneaking()) && !world.isOutOfHeightLimit(pos)) {
 			if (world.isAir(pos)) {
 				BlockState state = NVBBlocks.ITEM_BLOCK.getDefaultState();
 

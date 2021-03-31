@@ -28,6 +28,6 @@ public class NVBBiomes {
 	// Rainforest				- Like jungle but less cursed 
 	// Caldera					- Important source for some minerals
 	// Swampland:				- bayou (like tbo), marshland (reeds)
-	
+
 	// Ocean types and Rivers
 }
