@@ -41,7 +41,9 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	 */
 	@Inject(at = @At("RETURN"), method = "canFoodHeal", cancellable = true)
 	private void onCanFoodHeal(CallbackInfoReturnable<Boolean> cir) {
-		cir.setReturnValue(cir.getReturnValueZ() && ((PlayerStats) this).h_allowNaturalHeal(this.world.getTime()));
+		if (!this.world.isClient()) {
+			cir.setReturnValue(cir.getReturnValueZ() && ((PlayerStats) this).h_allowNaturalHeal(this.world.getTime()));
+		}
 	}
 
 }
