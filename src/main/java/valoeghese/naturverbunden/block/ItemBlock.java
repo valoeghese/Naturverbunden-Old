@@ -47,21 +47,23 @@ public class ItemBlock extends BlockWithEntity {
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
-		ItemStack stack = player.getStackInHand(hand);
+		if (hand == Hand.MAIN_HAND) {
+			ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
+			ItemStack stack = player.getStackInHand(hand);
 
-		if (stack.isEmpty()) {
-			PlayerInventory inventory = player.getInventory();
-			Optional<ItemStack> s = entity.removeItem(world, pos);
+			if (stack.isEmpty()) {
+				PlayerInventory inventory = player.getInventory();
+				Optional<ItemStack> s = entity.removeItem(world, pos);
 
-			if (s.isPresent()) {
-				inventory.insertStack(inventory.selectedSlot, s.get());
-				return ActionResult.success(world.isClient());
-			}
-		} else {
-			if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
-				stack.decrement(1);
-				return ActionResult.SUCCESS;
+				if (s.isPresent()) {
+					inventory.insertStack(inventory.selectedSlot, s.get());
+					return ActionResult.success(world.isClient());
+				}
+			} else if (!stack.hasEnchantments()) {
+				if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
+					stack.decrement(1);
+					return ActionResult.SUCCESS;
+				}
 			}
 		}
 
@@ -91,7 +93,7 @@ public class ItemBlock extends BlockWithEntity {
 				float f = world.getRandom().nextFloat() * 0.5F;
 				float g = world.getRandom().nextFloat() * 6.2831855F;
 				itemEntity.setVelocity((double)(-MathHelper.sin(g) * f), 0.2D, (double)(MathHelper.cos(g) * f));
-				
+
 				if (!world.isClient()) {
 					world.spawnEntity(itemEntity);
 				}

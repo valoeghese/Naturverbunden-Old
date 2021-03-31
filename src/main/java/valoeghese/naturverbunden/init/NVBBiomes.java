@@ -27,6 +27,7 @@ public class NVBBiomes {
 	// Boreal Forest 			- (aspen and pines) 
 	// Rainforest				- Like jungle but less cursed 
 	// Caldera					- Important source for some minerals
+	// Swampland:				- bayou (like tbo), marshland (reeds)
 	
 	// Ocean types and Rivers
 }

@@ -25,7 +25,7 @@
   
   "accessWidener": "nvb.aw",
 
-  "requires": {
+  "depends": {
     "fabricloader": ">=0.4.0"
   },
   

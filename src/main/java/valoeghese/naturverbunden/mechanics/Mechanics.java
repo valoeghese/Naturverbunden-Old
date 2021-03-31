@@ -36,7 +36,7 @@ public class Mechanics {
 		BlockPos pos = context.getBlockPos().offset(context.getSide());
 		ItemStack stack = context.getStack();
 
-		if (stack != ItemStack.EMPTY && !world.isOutOfHeightLimit(pos)) {
+		if (!stack.isEmpty() && !stack.hasEnchantments() && !world.isOutOfHeightLimit(pos)) {
 			if (world.isAir(pos)) {
 				BlockState state = NVBBlocks.ITEM_BLOCK.getDefaultState();
 
