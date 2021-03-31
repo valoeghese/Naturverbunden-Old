@@ -29,7 +29,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import valoeghese.naturverbunden.mechanics.PlayerStats;
 
@@ -43,8 +43,8 @@ public abstract class MixinLivingEntity extends Entity {
 	private void onSetSprinting(boolean sprinting, CallbackInfo info) {
 		LivingEntity self = (LivingEntity) (Object) this;
 
-		if (self instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) self;
+		if (self instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) self;
 			((PlayerStats) player).h_setUnlockVonSprint(this.world.getTime(), !sprinting);
 		}
 	}
