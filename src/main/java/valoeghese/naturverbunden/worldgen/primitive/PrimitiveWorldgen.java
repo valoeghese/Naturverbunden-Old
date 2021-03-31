@@ -16,23 +16,14 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+/
 
-package valoeghese.naturverbunden.mixin;
+package valoeghese.naturverbunden.worldgen.primitive;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import valoeghese.naturverbunden.core.NVBBlockUtils;
+import valoeghese.naturverbunden.core.NVBFeatures;
+import valoeghese.naturverbunden.core.NVBRecipes;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.util.ActionResult;
-import valoeghese.naturverbunden.mechanics.Mechanics;
-
-@Mixin(Item.class)
-public class MixinItem {
-	@Inject(at = @At("HEAD"), method = "useOnBlock", cancellable = true)
-	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
-		Mechanics.placeItem(context, info::setReturnValue);
-	}
+public class PrimitiveWorldgen {
+	
 }

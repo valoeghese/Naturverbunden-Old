@@ -17,17 +17,21 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.init;
+package valoeghese.naturverbunden.mixin.health;
 
-public class NVBBiomes {
-	// Mountains				- Mountain Chain Gen
-	// Plains; Forest			- Vanilla Style
-	// Scrubland				- I described this biome somewhere already
-	// Ice Cap					- Vanilla's Ice Bioems and frozen ocean
-	// Boreal Forest 			- (aspen and pines) 
-	// Rainforest				- Like jungle but less cursed 
-	// Caldera					- Important source for some minerals
-	// Swampland:				- bayou (like tbo), marshland (reeds)
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-	// Ocean types and Rivers
+import net.minecraft.entity.player.HungerManager;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import valoeghese.naturverbunden.core.NVBComponents;
+
+@Mixin(HungerManager.class)
+public class MixinHungerManager {
+	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;heal(F)V"), method = "update(Lnet/minecraft/entity/player/PlayerEntity;)V")
+	private void redirectUpdateHeal(PlayerEntity player, float amount) {
+		player.heal(NVBComponents.getStats((ServerPlayerEntity) player).expendHealPoints(amount));
+	}
 }

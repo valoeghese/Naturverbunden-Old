@@ -17,29 +17,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden;
+package valoeghese.naturverbunden.core;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Arrays;
 
-import net.fabricmc.api.ModInitializer;
-import net.minecraft.util.Identifier;
-import valoeghese.naturverbunden.common.primitive.PrimitiveContent;
-import valoeghese.naturverbunden.core.NVBFeatures;
-import valoeghese.naturverbunden.core.NVBRecipes;
+import net.minecraft.item.Items;
+import valoeghese.naturverbunden.mechanics.primitive.PrimitiveCrafting;
 
-public class Naturverbunden implements ModInitializer {
-	public static final Logger LOGGER = LogManager.getLogger("Naturverbunden");
-
-	@Override
-	public void onInitialize() {
-		PrimitiveContent.forceRegister();
-		NVBRecipes.initialise();
-		NVBFeatures.forceRegister();
-		NVBFeatures.initialiseWorldGen();
-	}
-
-	public static Identifier id(String id) {
-		return new Identifier("nvb", id);
+public class NVBRecipes {
+	public static void initialise() {
+		// "Primitive" recipes
+		PrimitiveCrafting.addRecipe(Arrays.asList(Items.STICK, Items.STICK, Items.FLINT), Items.DIAMOND);
 	}
 }

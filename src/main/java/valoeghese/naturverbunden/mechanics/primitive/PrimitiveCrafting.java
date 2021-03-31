@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.mechanics;
+package valoeghese.naturverbunden.mechanics.primitive;
 
 import java.util.ArrayList;
 import java.util.HashMap;

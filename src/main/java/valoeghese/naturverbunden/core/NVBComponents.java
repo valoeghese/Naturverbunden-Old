@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.init;
+package valoeghese.naturverbunden.core;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
@@ -25,7 +25,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import valoeghese.naturverbunden.Naturverbunden;
-import valoeghese.naturverbunden.mechanics.PlayerStats;
+import valoeghese.naturverbunden.health.PlayerStats;
 
 public class NVBComponents implements EntityComponentInitializer {
 	@Override

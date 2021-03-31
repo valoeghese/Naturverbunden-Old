@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.block.entity;
+package valoeghese.naturverbunden.common.primitive;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +37,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import valoeghese.naturverbunden.init.NVBBlocks;
-import valoeghese.naturverbunden.mechanics.PrimitiveCrafting;
+import valoeghese.naturverbunden.mechanics.primitive.PrimitiveCrafting;
 
 public class ItemBlockEntity extends BlockEntity {
 	public ItemBlockEntity(BlockPos pos, BlockState state) {
-		super(NVBBlocks.ITEM_BLOCK_ENTITY, pos, state);
+		super(PrimitiveContent.ITEM_BLOCK_ENTITY, pos, state);
 		this.items = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	}
 

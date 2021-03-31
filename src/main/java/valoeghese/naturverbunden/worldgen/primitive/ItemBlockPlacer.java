@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.features;
+package valoeghese.naturverbunden.worldgen.primitive;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.placer.BlockPlacer;
 import net.minecraft.world.gen.placer.BlockPlacerType;
-import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
-import valoeghese.naturverbunden.init.NVBFeatures;
+import valoeghese.naturverbunden.common.primitive.ItemBlockEntity;
+import valoeghese.naturverbunden.core.NVBFeatures;
 
 public class ItemBlockPlacer extends BlockPlacer {
 	public ItemBlockPlacer(Item item) {

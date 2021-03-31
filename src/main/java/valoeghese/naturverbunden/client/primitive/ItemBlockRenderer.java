@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.client.render;
+package valoeghese.naturverbunden.client.primitive;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -28,7 +28,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3f;
-import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
+import valoeghese.naturverbunden.common.primitive.ItemBlockEntity;
 
 public class ItemBlockRenderer implements BlockEntityRenderer<ItemBlockEntity> {
 	public ItemBlockRenderer(BlockEntityRendererFactory.Context ctx) {

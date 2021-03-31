@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.init;
+package valoeghese.naturverbunden.core;
 
 import com.mojang.serialization.Codec;
 
@@ -38,7 +38,8 @@ import net.minecraft.world.gen.placer.BlockPlacer;
 import net.minecraft.world.gen.placer.BlockPlacerType;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import valoeghese.naturverbunden.Naturverbunden;
-import valoeghese.naturverbunden.features.ItemBlockPlacer;
+import valoeghese.naturverbunden.common.primitive.PrimitiveContent;
+import valoeghese.naturverbunden.worldgen.primitive.ItemBlockPlacer;
 
 public class NVBFeatures {
 	private static <P extends BlockPlacer> BlockPlacerType<P> register(String id, Codec<P> codec) {
@@ -50,8 +51,8 @@ public class NVBFeatures {
 	}
 
 	private static ConfiguredFeature<?, ?> createFrequentPatch(RegistryKey<ConfiguredFeature<?, ?>> key, int frequency, BlockState state, BlockPlacer placer) {
-		return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(state), placer).tries(16).cannotProject().build())
-				.decorate(ConfiguredFeatures.Decorators.SPREAD_32_ABOVE).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeat(frequency));
+		return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, key.getValue(), Feature.RANDOM_PATCH.configure(new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(state), placer).tries(32).cannotProject().build())
+				.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE).repeat(frequency));
 	}
 
 	public static final BlockPlacerType<ItemBlockPlacer> ITEM_BLOCK_PLACER = register("item_block_placer", ItemBlockPlacer.CODEC);
@@ -59,10 +60,10 @@ public class NVBFeatures {
 	// Forest Ground Sticks
 	// TODO make this a tree decorator
 	private static final RegistryKey<ConfiguredFeature<?, ?>> K_FOREST_GROUND_STICKS = key("forest_ground_sticks");
-	public static final ConfiguredFeature<?, ?> FOREST_GROUND_STICKS = createFrequentPatch(K_FOREST_GROUND_STICKS, 4, NVBBlocks.ITEM_BLOCK.getDefaultState(), new ItemBlockPlacer(Items.STICK)); 
+	public static final ConfiguredFeature<?, ?> FOREST_GROUND_STICKS = createFrequentPatch(K_FOREST_GROUND_STICKS, 6, PrimitiveContent.ITEM_BLOCK.getDefaultState(), new ItemBlockPlacer(Items.STICK)); 
 
 	private static final RegistryKey<ConfiguredFeature<?, ?>> K_SPARSE_GROUND_STICKS = key("sparse_ground_sticks");
-	public static final ConfiguredFeature<?, ?> SPARSE_GROUND_STICKS = createFrequentPatch(K_SPARSE_GROUND_STICKS, 1, NVBBlocks.ITEM_BLOCK.getDefaultState(), new ItemBlockPlacer(Items.STICK)); 
+	public static final ConfiguredFeature<?, ?> SPARSE_GROUND_STICKS = createFrequentPatch(K_SPARSE_GROUND_STICKS, 2, PrimitiveContent.ITEM_BLOCK.getDefaultState(), new ItemBlockPlacer(Items.STICK)); 
 
 	public static final ConfiguredFeature<?, ?> forceRegister() {
 		return FOREST_GROUND_STICKS;

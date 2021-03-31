@@ -17,7 +17,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.block;
+package valoeghese.naturverbunden.common.primitive;
 
 import java.util.Optional;
 
@@ -43,7 +43,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 
 public class ItemBlock extends BlockWithEntity {
 	public ItemBlock(Settings settings) {

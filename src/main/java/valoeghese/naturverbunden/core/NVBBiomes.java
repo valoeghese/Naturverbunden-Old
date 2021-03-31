@@ -17,16 +17,17 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package valoeghese.naturverbunden.init;
+package valoeghese.naturverbunden.core;
 
-import java.util.Arrays;
+public class NVBBiomes {
+	// Mountains				- Mountain Chain Gen
+	// Plains; Forest			- Vanilla Style
+	// Scrubland				- I described this biome somewhere already
+	// Ice Cap					- Vanilla's Ice Bioems and frozen ocean
+	// Boreal Forest 			- (aspen and pines) 
+	// Rainforest				- Like jungle but less cursed 
+	// Caldera					- Important source for some minerals
+	// Swampland:				- bayou (like tbo), marshland (reeds)
 
-import net.minecraft.item.Items;
-import valoeghese.naturverbunden.mechanics.PrimitiveCrafting;
-
-public class NVBRecipes {
-	public static void initialise() {
-		// "Primitive" recipes
-		PrimitiveCrafting.addRecipe(Arrays.asList(Items.STICK, Items.STICK, Items.FLINT), Items.DIAMOND);
-	}
+	// Ocean types and Rivers
 }
