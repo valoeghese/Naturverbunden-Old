@@ -60,6 +60,11 @@ public class ItemBlockEntity extends BlockEntity {
 		return this.craftProgress;
 	}
 
+	public void setItemWorldgen(Item item) {
+		this.items.set(0, item.getDefaultStack());
+		this.markDirty();
+	}
+
 	public boolean addItem(ItemStack item) {
 		for(int i = 0; i < this.items.size(); ++i) {
 			ItemStack itemStack = this.items.get(i);
@@ -118,7 +123,7 @@ public class ItemBlockEntity extends BlockEntity {
 		if (this.craftProgress > 0 || PrimitiveCrafting.match(this.getContents())) {
 			if (++this.craftProgress > 4) {
 				Item result = PrimitiveCrafting.get(this.getContents());
-				
+
 				this.items.clear();
 				this.items.set(0, result.getDefaultStack());
 			}
@@ -131,7 +136,6 @@ public class ItemBlockEntity extends BlockEntity {
 		this.markDirty();
 		this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
 	}
-
 
 	public void clear() {
 		this.items.clear();

@@ -32,6 +32,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.placer.BlockPlacer;
 import net.minecraft.world.gen.placer.BlockPlacerType;
+import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
 import valoeghese.naturverbunden.init.NVBFeatures;
 
 public class ItemBlockPlacer extends BlockPlacer {
@@ -44,6 +45,8 @@ public class ItemBlockPlacer extends BlockPlacer {
 	@Override
 	public void generate(WorldAccess world, BlockPos pos, BlockState state, Random random) {
 		world.setBlockState(pos, state, 2);
+		ItemBlockEntity entity = (ItemBlockEntity) world.getBlockEntity(pos);
+		entity.setItemWorldgen(this.item);
 	}
 
 	@Override
