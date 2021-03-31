@@ -64,10 +64,14 @@ public class ItemBlock extends BlockWithEntity {
 					inventory.insertStack(inventory.selectedSlot, s.get());
 					return ActionResult.success(world.isClient());
 				}
-			} else if (!stack.hasEnchantments()) {
-				if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
-					stack.decrement(1);
-					return ActionResult.SUCCESS;
+			} else {
+				if (!stack.hasEnchantments()) {
+					if (entity.addItem(new ItemStack(stack.getItem(), 1))) {
+						stack.decrement(1);
+						return ActionResult.SUCCESS;
+					}
+				} else if (player.isSneaking() && entity.removeItem(world, pos, stack)) {
+					return ActionResult.success(world.isClient());
 				}
 			}
 		}

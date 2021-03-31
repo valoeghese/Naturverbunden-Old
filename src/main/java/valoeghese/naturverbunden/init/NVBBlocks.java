@@ -26,13 +26,16 @@ import com.mojang.datafixers.types.Type;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 import valoeghese.naturverbunden.Naturverbunden;
 import valoeghese.naturverbunden.block.ItemBlock;
 import valoeghese.naturverbunden.block.entity.ItemBlockEntity;
@@ -47,10 +50,17 @@ public class NVBBlocks {
 		return Registry.register(Registry.BLOCK_ENTITY_TYPE, Naturverbunden.id(id), builder.build(type));
 	}
 
+	private static Boolean never(BlockState state, BlockView world, BlockPos pos) {
+		return false;
+	}
+
 	public static final Block ITEM_BLOCK = register("item_block", AbstractBlock.Settings.of(Material.DECORATION)
 			.strength(-1.0f, 0.4f)
 			.noCollision()
 			.nonOpaque()
+			.solidBlock(NVBBlocks::never)
+			.suffocates(NVBBlocks::never)
+			.blockVision(NVBBlocks::never)
 			.sounds(BlockSoundGroup.STONE), ItemBlock::new);
 
 	public static final BlockEntityType<ItemBlockEntity> ITEM_BLOCK_ENTITY = create("item_block", FabricBlockEntityTypeBuilder.create(ItemBlockEntity::new, ITEM_BLOCK));

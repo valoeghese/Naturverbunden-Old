@@ -109,6 +109,48 @@ public class ItemBlockEntity extends BlockEntity {
 		return Optional.empty();
 	}
 
+	public boolean removeItem(World world, BlockPos pos, ItemStack stack) {
+		if (stack.getCount() == stack.getMaxCount()) {
+			return false;
+		}
+
+		Item item = stack.getItem();
+		boolean empty = true;
+
+		for(int i = this.items.size() - 1; i >= 0; --i) {
+			ItemStack itemStack = this.items.get(i);
+
+			if (!itemStack.isEmpty()) {
+				if (itemStack.getItem() == item) {
+					this.items.set(i, ItemStack.EMPTY);
+					stack.increment(1);
+					this.craftProgress = 0;
+					this.updateListeners();
+
+					// Check if more items
+					if (empty) {
+						for (--i; i >= 0; --i) {
+							if (!this.items.get(i).isEmpty()) {
+								empty = false;
+								break;
+							}
+						}
+					}
+
+					if (empty) {
+						world.setBlockState(pos, Blocks.AIR.getDefaultState());
+					}
+
+					return true;
+				}
+
+				empty = false;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * @return A list of the items in this block entity.
 	 */
