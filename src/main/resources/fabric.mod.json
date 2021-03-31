@@ -20,6 +20,9 @@
     ],
     "client": [
       "valoeghese.naturverbunden.client.NVBClient"
+    ],
+    "cardinal-components-entity": [
+      "valoeghese.naturverbunden.init.NVBComponents"
     ]
   },
   
@@ -31,5 +34,11 @@
   
   "mixins": [
     "naturverbunden.mixins.json"
-  ]
+  ],
+  
+  "custom": {
+    "cardinal-components": [
+      "nvb:playerstats"
+    ]
+  }
 }

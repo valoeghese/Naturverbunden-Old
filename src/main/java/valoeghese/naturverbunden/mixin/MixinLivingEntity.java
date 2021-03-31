@@ -31,7 +31,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
-import valoeghese.naturverbunden.mechanics.PlayerStats;
+import valoeghese.naturverbunden.init.NVBComponents;
 
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity extends Entity {
@@ -45,15 +45,10 @@ public abstract class MixinLivingEntity extends Entity {
 
 		if (self instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) self;
-			((PlayerStats) player).h_setUnlockVonSprint(this.world.getTime(), !sprinting);
+			NVBComponents.getStats((ServerPlayerEntity) player).setUnlockVonSprint(this.world.getTime(), !sprinting);
 		}
 	}
 
 	@Shadow
 	public abstract AttributeContainer getAttributes();
-	/*@Override
-	public void setMaxHealth(float maxHealth) {
-		this.getAttributes().getValue(EntityAttributes.GENERIC_MAX_HEALTH);
-		//this.dataTracker.set(EntityAttributes.GENERIC_MAX_HEALTH, maxHealth);
-	}*/
 }

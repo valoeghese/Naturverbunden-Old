@@ -27,8 +27,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
-import valoeghese.naturverbunden.mechanics.PlayerStats;
+import valoeghese.naturverbunden.init.NVBComponents;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerEntity extends LivingEntity {
@@ -42,7 +43,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 	@Inject(at = @At("RETURN"), method = "canFoodHeal", cancellable = true)
 	private void onCanFoodHeal(CallbackInfoReturnable<Boolean> cir) {
 		if (!this.world.isClient()) {
-			cir.setReturnValue(cir.getReturnValueZ() && ((PlayerStats) this).h_allowNaturalHeal(this.world.getTime()));
+			cir.setReturnValue(cir.getReturnValueZ() && NVBComponents.getStats((ServerPlayerEntity) (Object) this).allowNaturalHeal(this.world.getTime()));
 		}
 	}
 

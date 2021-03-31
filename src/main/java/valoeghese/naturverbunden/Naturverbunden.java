@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.minecraft.util.Identifier;
 import valoeghese.naturverbunden.init.NVBBlocks;
 import valoeghese.naturverbunden.init.NVBFeatures;

@@ -7,7 +7,6 @@
     "MixinItem",
     "MixinLivingEntity",
     "MixinPlayerEntity",
-    "MixinServerPlayerEntity",
     "MixinServerWorld"
   ],
   "client": [

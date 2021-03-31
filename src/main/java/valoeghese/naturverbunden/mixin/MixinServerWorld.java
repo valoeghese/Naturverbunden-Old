@@ -25,10 +25,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import valoeghese.naturverbunden.mechanics.PlayerStats;
+import valoeghese.naturverbunden.init.NVBComponents;
 
 @Mixin(ServerWorld.class)
 public class MixinServerWorld {
@@ -38,11 +39,11 @@ public class MixinServerWorld {
 		World world = (World) (Object) this;
 
 		if (world.getGameRules().getBoolean(GameRules.NATURAL_REGENERATION)) {
-			world.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(playerEntity -> {
-				if (playerEntity.getHealth() < playerEntity.getMaxHealth() && playerEntity.getHungerManager().getFoodLevel() > 0) {
-					playerEntity.heal(playerEntity.getMaxHealth() / 2);
-					playerEntity.addExhaustion(30.0f);
-					((PlayerStats) playerEntity).h_resetHealPoints();
+			world.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(player -> {
+				if (player.getHealth() < player.getMaxHealth() && player.getHungerManager().getFoodLevel() > 0) {
+					player.heal(player.getMaxHealth() / 2);
+					player.addExhaustion(30.0f);
+					NVBComponents.getStats((ServerPlayerEntity) player).resetHealPoints();
 				}
 			});
 		}
